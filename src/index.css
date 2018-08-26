@@ -4,16 +4,21 @@ body {
   font-family: sans-serif;
 }
 
-.place {
+.place{
+  width: 100%;
   position: relative;
-  margin: auto;
-  width: 1600px;
-  height: 900px;
-  background: #aaa;
-  border: 1px solid black;
+}
+
+.scroll{
+  width: 4320px;
+  height: 7680px;
+  padding-right: 17px;
+  box-sizing: content-box;
+  opacity: .3;
+  position: absolute;
 }
 
 .pixel {
+  background-color: red;
   position: absolute;
-  background: red;
 }
