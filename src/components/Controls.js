@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ColorBtn from './ColorBtn'
 
 class Controls extends Component {
     componentWillMount() {
@@ -13,10 +14,14 @@ class Controls extends Component {
         switch (e.key) {
             case '+':
                 this.zoomIn()
-                break;
+                break
+
             case '-':
                 this.zoomOut()
-                break;
+                break
+
+            default:
+                break
         }
     }
 
@@ -31,8 +36,9 @@ class Controls extends Component {
     render() {
         return (
             <div className="controls">
-                <button onClick={this.zoomIn} className="btn zoom-more">+</button>
-                <button onClick={this.zoomOut} className="btn zoom-less">-</button>
+                <button onClick={this.zoomIn} className="btn zoom in">+</button>
+                <button onClick={this.zoomOut} className="btn zoom out">-</button>
+                <ColorBtn />
             </div>
         )
     }

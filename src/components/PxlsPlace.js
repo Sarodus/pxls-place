@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-const WIDTH = 1600
-const HEIGHT = 900
 const SIZE = 5
-const ROWS = WIDTH / SIZE
-const COLS = HEIGHT / SIZE
 
-const Pixel = ({x, y}) =>
-    <div className="pixel" style={{left: x * SIZE, top: y * SIZE, width: SIZE, height: SIZE}}></div>
+const Pixel = ({x, y, c}) => {
+    const style = {
+        left: x * SIZE,
+        top: y * SIZE,
+        width: SIZE,
+        height: SIZE,
+        backgroundColor: c
+    }
+    return <div className="pixel" style={style}></div>
+}
 
 class PxlsPlace extends Component {
     state = {
@@ -34,11 +39,11 @@ class PxlsPlace extends Component {
     }
 
     placePixel = e => {
-        console.log(e.pageY, e.target.offsetTop, window.pageYOffset)
         const x = Math.floor((e.pageX - e.target.offsetLeft) / SIZE)
         const y = Math.floor((e.pageY - e.target.offsetTop) / SIZE)
+        const c = this.props.color
         this.setState({
-            pixels: this.state.pixels.concat({x, y})
+            pixels: this.state.pixels.concat({x, y, c})
         })
     }
 
@@ -54,4 +59,8 @@ class PxlsPlace extends Component {
     }
 }
 
-export default PxlsPlace
+const mapStateToProps = state => ({
+    color: state.controls.color
+})
+
+export default connect(mapStateToProps)(PxlsPlace)
