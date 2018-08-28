@@ -9,7 +9,6 @@ class App extends Component {
       <div>
         <PxlsPlace />
         <Controls />
-        <Picker />
       </div>
     )
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ColorBtn from './ColorBtn'
+import Picker from './Picker'
 
 class Controls extends Component {
     componentWillMount() {
@@ -39,6 +40,7 @@ class Controls extends Component {
                 <button onClick={this.zoomIn} className="btn zoom in">+</button>
                 <button onClick={this.zoomOut} className="btn zoom out">-</button>
                 <ColorBtn />
+                <Picker />
             </div>
         )
     }

@@ -1,25 +1,36 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { pickColor } from '../actions'
+import { pickColor, addColor, removeColor, resetColors } from '../actions'
 
 class Picker extends Component {
-    render() {
-        const { display, color, pickColor } = this.props
-        if (!display) return null
+    renderColor = color => (
+        <div
+            key={color}
+            onClick={() => this.props.pickColor(color)}
+            className="color"
+            style={{backgroundColor: color}}
+        ></div>
+    )
 
+    render() {
         return (
-            <div className="picker" onClick={() => pickColor('green')}>zzz</div>
+            <div className="picker">
+                {this.props.pallete.map(this.renderColor)}
+            </div>
         )
     }
 }
 
 const mapStateToProps = state => ({
-    color: state.controls.color,
-    display: state.controls.display
+    display: state.controls.display,
+    pallete: state.controls.pallete
 })
 
 const mapDispatchToProps = dispatch => ({
-    pickColor: color => dispatch(pickColor(color))
+    pickColor: color => dispatch(pickColor(color)),
+    addColor: color => dispatch(addColor(color)),
+    removeColor: color => dispatch(removeColor(color)),
+    resetColors: () => dispatch(resetColors())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Picker)
