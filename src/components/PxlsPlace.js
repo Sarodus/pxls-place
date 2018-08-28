@@ -39,8 +39,9 @@ class PxlsPlace extends Component {
     }
 
     placePixel = e => {
-        const x = Math.floor((e.pageX - e.target.offsetLeft) / SIZE)
-        const y = Math.floor((e.pageY - e.target.offsetTop) / SIZE)
+        const { zoom } = this.props
+        const x = Math.floor((e.pageX - e.target.offsetLeft) / SIZE / zoom)
+        const y = Math.floor((e.pageY - e.target.offsetTop) / SIZE / zoom)
         const c = this.props.color
         this.setState({
             pixels: this.state.pixels.concat({x, y, c})
@@ -49,8 +50,9 @@ class PxlsPlace extends Component {
 
     render() {
         const {height, pixels} = this.state
+        const { zoom } = this.props
         return (
-            <div className="place" onClick={this.placePixel} style={{height}}>
+            <div className="place" onClick={this.placePixel} style={{height, zoom}}>
                 <div className="scroll" onClick={this.placePixel}>
                     {pixels.map((p, key) => <Pixel key={key} {...p} />)}
                 </div>
@@ -60,7 +62,8 @@ class PxlsPlace extends Component {
 }
 
 const mapStateToProps = state => ({
-    color: state.controls.color
+    color: state.controls.color,
+    zoom: state.controls.zoom
 })
 
 export default connect(mapStateToProps)(PxlsPlace)

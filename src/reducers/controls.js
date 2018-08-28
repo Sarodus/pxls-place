@@ -1,4 +1,6 @@
 import {
+    ZOOM_IN,
+    ZOOM_OUT,
     PICK_COLOR,
     ADD_COLOR,
     REMOVE_COLOR,
@@ -10,11 +12,26 @@ const baisc_colors = Object.values(colors)
 
 const defaultState = {
     color: 'black',
-    pallete: baisc_colors
+    pallete: baisc_colors,
+    zoom: 1
 }
+
+const zoomStep = .2
+const maxZoom = 4
+const minZoom = .5
 
 export default (state=defaultState, action) => {
     switch(action.type) {
+        case ZOOM_IN:
+            return {
+                ...state,
+                zoom: Math.min(state.zoom + zoomStep, maxZoom)
+            }
+        case ZOOM_OUT:
+            return {
+                ...state,
+                zoom: Math.max(state.zoom - zoomStep, minZoom)
+            }
         case PICK_COLOR:
             return {
                 ...state,

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import ColorBtn from './ColorBtn'
 import Picker from './Picker'
+import { zoomIn, zoomOut } from '../actions'
 
 class Controls extends Component {
     componentWillMount() {
@@ -14,11 +16,11 @@ class Controls extends Component {
     handleKeydown = e => {
         switch (e.key) {
             case '+':
-                this.zoomIn()
+                this.props.zoomIn()
                 break
 
             case '-':
-                this.zoomOut()
+                this.props.zoomOut()
                 break
 
             default:
@@ -26,19 +28,12 @@ class Controls extends Component {
         }
     }
 
-    zoomIn = () => {
-        console.log('zoom in!')
-    }
-
-    zoomOut = () => {
-        console.log('zoom out!')
-    }
-
     render() {
+        const { zoomIn, zoomOut } = this.props
         return (
             <div className="controls">
-                <button onClick={this.zoomIn} className="btn zoom in">+</button>
-                <button onClick={this.zoomOut} className="btn zoom out">-</button>
+                <button onClick={zoomIn} className="btn zoom in">+</button>
+                <button onClick={zoomOut} className="btn zoom out">-</button>
                 <ColorBtn />
                 <Picker />
             </div>
@@ -46,4 +41,9 @@ class Controls extends Component {
     }
 }
 
-export default Controls
+const mapDispatchToProps = dispatch => ({
+    zoomIn: () => dispatch(zoomIn()),
+    zoomOut: () => dispatch(zoomOut()),
+})
+
+export default connect(null, mapDispatchToProps)(Controls)
