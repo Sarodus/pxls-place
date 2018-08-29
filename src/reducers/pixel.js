@@ -1,19 +1,22 @@
 import {
-    PIXEL_LOAD,
-    PIXELS_LOADED,
     PIXEL_CREATE,
+    PIXEL_RECEIVE,
 } from '../actions'
 
-export default (state={}, action) => {
+export default (state={pixels:[]}, action) => {
     switch(action.type) {
-        case PIXEL_LOAD:
-            return state
-
-        case PIXELS_LOADED:
-            return state
+        case PIXEL_RECEIVE:
+            console.log('receive!! lul', action.pixel)
+            return {
+                ...state,
+                pixels: state.pixels.concat(action.pixel)
+            }
 
         case PIXEL_CREATE:
-            return state
+            return {
+                ...state,
+                pixels: state.pixels.concat(action.pixel)
+            }
 
         default:
             return state

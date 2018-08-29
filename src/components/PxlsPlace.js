@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { pixelCreate } from '../actions'
 
 const SIZE = 5
 
@@ -43,17 +44,16 @@ class PxlsPlace extends Component {
         const x = Math.floor((e.pageX - e.target.offsetLeft) / SIZE / zoom)
         const y = Math.floor((e.pageY - e.target.offsetTop) / SIZE / zoom)
         const c = this.props.color
-        this.setState({
-            pixels: this.state.pixels.concat({x, y, c})
-        })
+        const pixel = {x, y, c}
+        this.props.pixelCreate(pixel)
     }
 
     render() {
-        const {height, pixels} = this.state
-        const { zoom } = this.props
+        const { height } = this.state
+        const { zoom, pixels } = this.props
         return (
             <div className="place" onClick={this.placePixel} style={{height, zoom}}>
-                <div className="scroll" onClick={this.placePixel}>
+                <div className="scroll">
                     {pixels.map((p, key) => <Pixel key={key} {...p} />)}
                 </div>
             </div>
@@ -63,7 +63,11 @@ class PxlsPlace extends Component {
 
 const mapStateToProps = state => ({
     color: state.controls.color,
-    zoom: state.controls.zoom
+    zoom: state.controls.zoom,
+    pixels: state.pixel.pixels
+})
+const mapDispatchToProps = dispatch => ({
+    pixelCreate: pixel => dispatch(pixelCreate(pixel))
 })
 
-export default connect(mapStateToProps)(PxlsPlace)
+export default connect(mapStateToProps, mapDispatchToProps)(PxlsPlace)

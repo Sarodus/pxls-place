@@ -1,4 +1,7 @@
-import * as firebase from 'firebase'
+// import * as firebase from 'firebase'
+import firebase from 'firebase'
+import store from './store'
+import { pixelReveice } from './actions'
 
 const config = {
     apiKey: process.env.REACT_APP_APIKEY,
@@ -11,5 +14,17 @@ const config = {
 
 firebase.initializeApp(config)
 
-const databaseRef = firebase.database().ref()
-export const pixelsRef = databaseRef.child('pixels')
+
+const firestore = firebase.firestore()
+const settings = {timestampsInSnapshots: true}
+firestore.settings(settings)
+
+export const pixelsRef = firestore.collection('pixels')
+
+pixelsRef.onSnapshot(snapshot =>{
+    snapshot.docChanges().forEach(change => {
+        if (change.type === "added" || change.type === "changed") {
+            store.dispatch(pixelReveice(change.doc.data()))
+        }
+    })
+})
