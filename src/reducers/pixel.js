@@ -1,21 +1,37 @@
 import {
     PIXEL_CREATE,
     PIXEL_RECEIVE,
+    PIXEL_REMOVE
 } from '../actions'
 
-export default (state={pixels:[]}, action) => {
+export default (state={pixels:{}}, action) => {
     switch(action.type) {
         case PIXEL_RECEIVE:
-            console.log('receive!! lul', action.pixel)
             return {
                 ...state,
-                pixels: state.pixels.concat(action.pixel)
+                pixels: {
+                    ...state.pixels,
+                    [action.pixel.date]: action.pixel
+                }
             }
 
         case PIXEL_CREATE:
             return {
                 ...state,
-                pixels: state.pixels.concat(action.pixel)
+                pixels: {
+                    ...state.pixels,
+                    [action.date]: action.pixel
+                }
+            }
+
+        case PIXEL_REMOVE:
+            const pixels = state.pixels
+            delete pixels[action.pixel.date]
+            return {
+                ...state,
+                pixels: {
+                    ...pixels
+                }
             }
 
         default:

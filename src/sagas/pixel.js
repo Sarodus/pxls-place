@@ -4,7 +4,11 @@ import { pixelsRef } from '../firebase'
 
 
 async function sendPixel(action) {
-    await pixelsRef.add(action.pixel)
+    const pixel = {
+        ...action.pixel,
+        date: action.date
+    }
+    await pixelsRef.add(pixel)
 }
 
 export default [

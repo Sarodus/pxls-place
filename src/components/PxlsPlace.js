@@ -17,9 +17,6 @@ const Pixel = ({x, y, c}) => {
 
 class PxlsPlace extends Component {
     state = {
-        pixels: [
-            {x: 10, y: 20}
-        ],
         height: window.innerHeight
     }
 
@@ -41,10 +38,11 @@ class PxlsPlace extends Component {
 
     placePixel = e => {
         const { zoom } = this.props
-        const x = Math.floor((e.pageX - e.target.offsetLeft) / SIZE / zoom)
-        const y = Math.floor((e.pageY - e.target.offsetTop) / SIZE / zoom)
-        const c = this.props.color
-        const pixel = {x, y, c}
+        const pixel = {
+            x: Math.floor((e.pageX - e.target.offsetLeft) / SIZE / zoom),
+            y: Math.floor((e.pageY - e.target.offsetTop) / SIZE / zoom),
+            c: this.props.color
+        }
         this.props.pixelCreate(pixel)
     }
 
@@ -64,7 +62,7 @@ class PxlsPlace extends Component {
 const mapStateToProps = state => ({
     color: state.controls.color,
     zoom: state.controls.zoom,
-    pixels: state.pixel.pixels
+    pixels: Object.values(state.pixel.pixels)
 })
 const mapDispatchToProps = dispatch => ({
     pixelCreate: pixel => dispatch(pixelCreate(pixel))

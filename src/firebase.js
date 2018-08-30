@@ -1,7 +1,7 @@
 // import * as firebase from 'firebase'
 import firebase from 'firebase'
 import store from './store'
-import { pixelReveice } from './actions'
+import { pixelReveice, pixelRemove } from './actions'
 
 const config = {
     apiKey: process.env.REACT_APP_APIKEY,
@@ -25,6 +25,8 @@ pixelsRef.onSnapshot(snapshot =>{
     snapshot.docChanges().forEach(change => {
         if (change.type === "added" || change.type === "changed") {
             store.dispatch(pixelReveice(change.doc.data()))
+        } else if(change.type === "removed") {
+            store.dispatch(pixelRemove(change.doc.data()))
         }
     })
 })

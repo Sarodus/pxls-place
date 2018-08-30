@@ -1,4 +1,5 @@
 export const PIXEL_CREATE = 'PIXEL_CREATE'
+export const PIXEL_REMOVE = 'PIXEL_REMOVE'
 export const PIXEL_RECEIVE = 'PIXEL_RECEIVE'
 
 export const ZOOM_IN = 'ZOOM_IN'
@@ -10,6 +11,12 @@ export const RESER_COLORS = 'RESER_COLORS'
 
 export const pixelCreate = pixel => ({
     type: PIXEL_CREATE,
+    date: new Date().getTime(),
+    pixel
+})
+
+export const pixelRemove = pixel => ({
+    type: PIXEL_REMOVE,
     pixel
 })
 
